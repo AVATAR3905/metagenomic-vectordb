@@ -18,8 +18,7 @@ def main():
         print()
 
     os.chdir(DIR)
-    from app import init, app
-    init()
+    from app import app
 
     port = int(os.environ.get("PORT", 5000))
     host = "0.0.0.0"
