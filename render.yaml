@@ -2,7 +2,7 @@ services:
   - type: web
     name: metagenomic-vectordb
     runtime: python
-    buildCommand: pip install -r requirements.txt && python -c "from chromadb.utils.embedding_functions import DefaultEmbeddingFunction; ef=DefaultEmbeddingFunction(); ef(['warmup'])"
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --preload --timeout 120
     envVars:
       - key: PYTHON_VERSION
