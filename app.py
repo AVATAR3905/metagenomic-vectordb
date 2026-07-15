@@ -82,7 +82,7 @@ def api_study(accession):
         "accession": accession,
         "document": full_doc,
         "metadata": {k: v for k, v in study.items() if k != "text"},
-        "runs": [{k: v for k, v in r.items() if k != "text"} for r in runs],
+        "runs": [{"id": r["id"], "metadata": {k: v for k, v in r.items() if k not in ("text", "id")}} for r in runs],
         "papers": [{"id": p["id"], "filename": p["filename"]} for p in papers]
     })
 
