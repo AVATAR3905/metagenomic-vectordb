@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metagenomic Vector DB Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Metagenomic Vector DB</h1>
+            <p class="subtitle">Semantic Search Across IITM Metagenomic Studies</p>
+        </header>
+
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number" id="stat-studies">-</div>
+                <div class="stat-label">Studies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-runs">-</div>
+                <div class="stat-label">Sequencing Runs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-papers">-</div>
+                <div class="stat-label">Research Papers</div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-tabs">
+                <button class="tab active" data-collection="studies">Studies</button>
+                <button class="tab" data-collection="runs">Runs</button>
+                <button class="tab" data-collection="papers">Papers</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search e.g. 'antimicrobial resistance in wastewater' or 'hot springs microbial diversity'">
+                <button id="search-btn" onclick="doSearch()">Search</button>
+            </div>
+            <div class="search-hint">
+                Try queries like: "soil metagenome India", "Illumina sequencing", "wastewater antimicrobial resistance", "freshwater sediments"
+            </div>
+        </div>
+
+        <div class="results-section" id="results-section" style="display:none;">
+            <div class="results-header">
+                <h2 id="results-title">Results</h2>
+                <span class="results-count" id="results-count"></span>
+            </div>
+            <div id="results-list"></div>
+        </div>
+
+        <div class="browse-section">
+            <h2>All Studies</h2>
+            <div class="filter-row">
+                <select id="filter-category" onchange="filterStudies()">
+                    <option value="">All Categories</option>
+                </select>
+                <select id="filter-instrument" onchange="filterStudies()">
+                    <option value="">All Instruments</option>
+                </select>
+                <select id="filter-location" onchange="filterStudies()">
+                    <option value="">All Locations</option>
+                </select>
+            </div>
+            <div id="studies-grid"></div>
+        </div>
+
+        <div class="modal-overlay" id="modal-overlay" style="display:none;" onclick="closeModal()">
+            <div class="modal" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

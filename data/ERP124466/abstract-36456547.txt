@@ -1,0 +1,84 @@
+1. Nat Commun. 2022 Dec 1;13(1):7251. doi: 10.1038/s41467-022-34312-7.
+
+Genomic analysis of sewage from 101 countries reveals global landscape of 
+antimicrobial resistance.
+
+Munk P(1), Brinch C(2), Møller FD(2), Petersen TN(2), Hendriksen RS(2), Seyfarth 
+AM(2), Kjeldgaard JS(2), Svendsen CA(2), van Bunnik B(3), Berglund F(4); Global 
+Sewage Surveillance Consortium; Larsson DGJ(4), Koopmans M(5), Woolhouse M(3), 
+Aarestrup FM(2).
+
+Collaborators: Bego A, Power P, Rees C, Lambrinidis D, Neilson EHJ, Gibb K, 
+Coventry K, Collignon P, Cassar S, Allerberger F, Begum A, Hossain ZZ, Worrell 
+C, Vandenberg O, Pieters I, Victorien DT, Gutierrez ADS, Soria F, Grujić VR, 
+Mazalica N, Rahube TO, Tagliati CA, Rodrigues D, Oliveira G, de Souza LCR, 
+Ivanov I, Juste BI, Oumar T, Sopheak T, Vuthy Y, Ngandjio A, Nzouankeu A, 
+Olivier ZAAJ, Yost CK, Kumar P, Brar SK, Tabo DA, Adell AD, Paredes-Osses E, 
+Martinez MC, Cuadros-Orellana S, Ke C, Zheng H, Baisheng L, Lau LT, Chung T, 
+Jiao X, Yu Y, JiaYong Z, Morales JFB, Valencia MF, Donado-Godoy P, Coulibaly KJ, 
+Hrenovic J, Jergović M, Karpíšková R, Deogratias ZN, Elsborg B, Hansen LT, 
+Jensen PE, Abouelnaga M, Salem MF, Koolmeister M, Legesse M, Eguale T, 
+Heikinheimo A, Le Guyader S, Schaeffer J, Villacis JE, Sanneh B, Malania L, 
+Nitsche A, Brinkmann A, Schubert S, Hesse S, Berendonk TU, Saba CKS, Mohammed J, 
+Feglo PK, Banu RA, Kotzamanidis C, Lytras E, Lickes SA, Kocsis B, Solymosi N, 
+Thorsteinsdottir TR, Hatha AM, Ballal M, Bangera SR, Fani F, Alebouyeh M, Morris 
+D, O'Connor L, Cormican M, Moran-Gilad J, Battisti A, Diaconu EL, Corno G, Di 
+Cesare A, Alba P, Hisatsune J, Yu L, Kuroda M, Sugai M, Kayama S, Shakenova Z, 
+Kiiyukia C, Ng'eno E, Raka L, Jamil K, Fakhraldeen SA, Alaati T, Bērziņš A, 
+Avsejenko J, Kokina K, Streikisa M, Bartkevics V, Matar GM, Daoud Z, Pereckienė 
+A, Butrimaite-Ambrozeviciene C, Penny C, Bastaraud A, Rasolofoarison T, Collard 
+JM, Samison LH, Andrianarivelo MR, Banda DL, Amin A, Rajandas H, Parimannan S, 
+Spiteri D, Haber MV, Santchurn SJ, Vujacic A, Djurovic D, Bouchrif B, Karraouan 
+B, Vubil DC, Pal P, Schmitt H, van Passel M, Jeunen GJ, Gemmell N, Chambers ST, 
+Mendoza FP, Huete-Pιrez J, Vilchez S, Ahmed AO, Adisa IR, Odetokun IA, Fashae K, 
+Sørgaard AM, Wester AL, Ryrfors P, Holmstad R, Mohsin M, Hasan R, Shakoor S, 
+Gustafson NW, Schill CH, Rojas MLZ, Velasquez JE, Magtibay BB, Catangcatang K, 
+Sibulo R, Yauce FC, Wasyl D, Manaia C, Rocha J, Martins J, Álvaro P, Di Yoong 
+Wen D, Shin H, Hur HG, Yoon S, Bosevska G, Kochubovski M, Cojocaru R, Burduniuc 
+O, Hong PY, Perry MR, Gassama A, Radosavljevic V, Tay MYF, Zuniga-Montanez R, 
+Wuertz S, Gavačová D, Pastuchová K, Truska P, Trkov M, Keddy K, Esterhuyse K, 
+Song MJ, Quintela-Baluja M, Lopez MG, Cerdà-Cuéllar M, Perera RRDP, Bandara 
+NKBKRGW, Premasiri HI, Pathirage S, Charlemagne K, Rutgersson C, Norrgren L, Örn 
+S, Boss R, Van der Heijden T, Hong YP, Kumburu HH, Mdegela RH, Hounmanou YMG, 
+Chonsin K, Suthienkul O, Thamlikitkul V, de Roda Husman AM, Bidjada B, 
+Njanpop-Lafourcade BM, Nikiema-Pessinaba SC, Levent B, Kurekci C, Ejobi F, 
+Kalule JB, Thomsen J, Obaidi O, Jassim LM, Moore A, Leonard A, Graham DW, Bunce 
+JT, Zhang L, Gaze WH, Lefor B, Capone D, Sozzi E, Brown J, Meschke JS, Sobsey 
+MD, Davis M, Beck NK, Sukapanpatharam P, Truong P, Lilienthal R, Kang S, Wittum 
+TE, Rigamonti N, Baklayan P, Van CD, Tran DMN, Do Phuc N, Kwenda G.
+
+Author information:
+(1)Research Group for Genomic Epidemiology, Technical University of Denmark, 
+Kgs, Lyngby, Denmark. pmun@food.dtu.dk.
+(2)Research Group for Genomic Epidemiology, Technical University of Denmark, 
+Kgs, Lyngby, Denmark.
+(3)Centre for Immunity, Infection and Evolution, University of Edinburgh, 
+Edinburgh, UK.
+(4)Centre for Antibiotic Resistance Research (CARe), University of Gothenburg, 
+Gothenburg, Sweden.
+(5)Department of Viroscience, Erasmus MC, Rotterdam, The Netherlands.
+
+Erratum in
+    Nat Commun. 2023 Jan 12;14(1):178. doi: 10.1038/s41467-023-35890-w.
+
+Antimicrobial resistance (AMR) is a major threat to global health. Understanding 
+the emergence, evolution, and transmission of individual antibiotic resistance 
+genes (ARGs) is essential to develop sustainable strategies combatting this 
+threat. Here, we use metagenomic sequencing to analyse ARGs in 757 sewage 
+samples from 243 cities in 101 countries, collected from 2016 to 2019. We find 
+regional patterns in resistomes, and these differ between subsets corresponding 
+to drug classes and are partly driven by taxonomic variation. The genetic 
+environments of 49 common ARGs are highly diverse, with most common ARGs carried 
+by multiple distinct genomic contexts globally and sometimes on plasmids. 
+Analysis of flanking sequence revealed ARG-specific patterns of dispersal 
+limitation and global transmission. Our data furthermore suggest certain 
+geographies are more prone to transmission events and should receive additional 
+attention.
+
+© 2022. The Author(s).
+
+DOI: 10.1038/s41467-022-34312-7
+PMCID: PMC9715550
+PMID: 36456547 [Indexed for MEDLINE]
+
+Conflict of interest statement: The authors declare no competing interests.
