@@ -1,14 +1,13 @@
 import os
 import csv
-import json
-import re
 import chromadb
-from sentence_transformers import SentenceTransformer
+from chromadb.utils import embedding_functions
 from docx import Document
 from PyPDF2 import PdfReader
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chroma_db")
+DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(DIR, "data")
+DB_DIR = os.path.join(DIR, "chroma_db")
 
 COMMON_COLUMNS = [
     "run_accession", "study_accession", "study_title",
@@ -71,8 +70,7 @@ def build_study_text(study_accession, study_title, csv_rows, analysis_text, pape
     parts.append(f"Study accession: {study_accession}")
     if study_title:
         parts.append(f"Study title: {study_title}")
-    n_runs = len(csv_rows)
-    parts.append(f"Number of sequencing runs: {n_runs}")
+    parts.append(f"Number of sequencing runs: {len(csv_rows)}")
     organisms = set()
     instruments = set()
     locations = set()
@@ -107,71 +105,47 @@ def build_study_text(study_accession, study_title, csv_rows, analysis_text, pape
 
 
 def ingest():
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+    ef = embedding_functions.DefaultEmbeddingFunction()
     client = chromadb.PersistentClient(path=DB_DIR)
 
-    try:
-        client.delete_collection("studies")
-    except Exception:
-        pass
-    try:
-        client.delete_collection("runs")
-    except Exception:
-        pass
-    try:
-        client.delete_collection("papers")
-    except Exception:
-        pass
+    for name in ["studies", "runs", "papers"]:
+        try:
+            client.delete_collection(name)
+        except Exception:
+            pass
 
-    studies_col = client.create_collection("studies", metadata={"hnsw:space": "cosine"})
-    runs_col = client.create_collection("runs", metadata={"hnsw:space": "cosine"})
-    papers_col = client.create_collection("papers", metadata={"hnsw:space": "cosine"})
+    studies_col = client.create_collection("studies", metadata={"hnsw:space": "cosine"}, embedding_function=ef)
+    runs_col = client.create_collection("runs", metadata={"hnsw:space": "cosine"}, embedding_function=ef)
+    papers_col = client.create_collection("papers", metadata={"hnsw:space": "cosine"}, embedding_function=ef)
 
-    study_ids = []
-    study_docs = []
-    study_metas = []
+    study_ids, study_docs, study_metas = [], [], []
+    run_ids, run_docs, run_metas = [], [], []
+    paper_ids, paper_docs, paper_metas = [], [], []
 
-    run_ids = []
-    run_docs = []
-    run_metas = []
-
-    paper_ids = []
-    paper_docs = []
-    paper_metas = []
-
-    dirs = [d for d in os.listdir(DATA_DIR) if os.path.isdir(os.path.join(DATA_DIR, d)) and d != "vector_db_demo"]
+    dirs = [d for d in os.listdir(DATA_DIR) if os.path.isdir(os.path.join(DATA_DIR, d))]
 
     for dirname in sorted(dirs):
         dirpath = os.path.join(DATA_DIR, dirname)
         accession = dirname
 
         csv_rows = []
-        csv_files = [f for f in os.listdir(dirpath) if f.endswith("_curated.csv")]
-        for cf in csv_files:
+        for cf in [f for f in os.listdir(dirpath) if f.endswith("_curated.csv")]:
             csv_rows.extend(read_csv_metadata(os.path.join(dirpath, cf)))
 
-        study_title = ""
-        if csv_rows:
-            study_title = csv_rows[0].get("study_title", "")
+        study_title = csv_rows[0].get("study_title", "") if csv_rows else ""
 
         analysis_text = ""
-        docx_files = [f for f in os.listdir(dirpath) if f.endswith(".docx")]
-        for df in docx_files:
+        for df in [f for f in os.listdir(dirpath) if f.endswith(".docx")]:
             analysis_text += read_docx(os.path.join(dirpath, df)) + "\n"
 
-        pdf_files = [f for f in os.listdir(dirpath) if f.endswith(".pdf")]
         paper_texts = []
-        for pf in pdf_files:
+        for pf in [f for f in os.listdir(dirpath) if f.endswith(".pdf")]:
             txt = read_pdf(os.path.join(dirpath, pf))
             if txt:
                 paper_texts.append(txt)
                 paper_ids.append(f"{accession}_{pf}")
                 paper_docs.append(txt[:5000])
-                paper_metas.append({
-                    "accession": accession,
-                    "filename": pf,
-                    "study_title": study_title or accession
-                })
+                paper_metas.append({"accession": accession, "filename": pf, "study_title": study_title or accession})
 
         study_text = build_study_text(accession, study_title, csv_rows, analysis_text, paper_texts)
         study_ids.append(accession)
@@ -180,14 +154,12 @@ def ingest():
             "accession": accession,
             "study_title": study_title or accession,
             "n_runs": len(csv_rows),
-            "n_papers": len(pdf_files),
+            "n_papers": len([f for f in os.listdir(dirpath) if f.endswith(".pdf")]),
             "has_analysis_plan": bool(analysis_text)
         })
 
         for i, row in enumerate(csv_rows):
-            run_acc = row.get("run_accession", f"{accession}_run_{i}")
-            if not run_acc:
-                run_acc = f"{accession}_run_{i}"
+            run_acc = row.get("run_accession", f"{accession}_run_{i}") or f"{accession}_run_{i}"
             run_text = row_to_text(row)
             if run_text:
                 run_ids.append(run_acc)
@@ -203,42 +175,26 @@ def ingest():
                     "layout": row.get("library_layout", "")
                 })
 
-        print(f"  Processed {accession}: {len(csv_rows)} runs, {len(pdf_files)} papers")
+        print(f"  {accession}: {len(csv_rows)} runs, {len([f for f in os.listdir(dirpath) if f.endswith('.pdf')])} papers")
 
     print(f"\nEmbedding {len(study_ids)} studies...")
-    study_embs = model.encode(study_docs, show_progress_bar=True).tolist()
-    studies_col.add(ids=study_ids, documents=study_docs, metadatas=study_metas, embeddings=study_embs)
+    studies_col.add(ids=study_ids, documents=study_docs, metadatas=study_metas)
 
     batch_size = 100
     if run_ids:
-        print(f"Embedding {len(run_ids)} runs in batches...")
+        print(f"Embedding {len(run_ids)} runs...")
         for i in range(0, len(run_ids), batch_size):
             end = min(i + batch_size, len(run_ids))
-            batch_embs = model.encode(run_docs[i:end], show_progress_bar=False).tolist()
-            runs_col.add(
-                ids=run_ids[i:end],
-                documents=run_docs[i:end],
-                metadatas=run_metas[i:end],
-                embeddings=batch_embs
-            )
-            print(f"    Batch {i // batch_size + 1}: runs {i}-{end}")
+            runs_col.add(ids=run_ids[i:end], documents=run_docs[i:end], metadatas=run_metas[i:end])
+            print(f"    Runs {i}-{end}")
 
     if paper_ids:
-        print(f"Embedding {len(paper_ids)} papers in batches...")
+        print(f"Embedding {len(paper_ids)} papers...")
         for i in range(0, len(paper_ids), batch_size):
             end = min(i + batch_size, len(paper_ids))
-            batch_embs = model.encode(paper_docs[i:end], show_progress_bar=False).tolist()
-            papers_col.add(
-                ids=paper_ids[i:end],
-                documents=paper_docs[i:end],
-                metadatas=paper_metas[i:end],
-                embeddings=batch_embs
-            )
+            papers_col.add(ids=paper_ids[i:end], documents=paper_docs[i:end], metadatas=paper_metas[i:end])
 
-    print(f"\nDone! Database stored at: {DB_DIR}")
-    print(f"  Studies: {studies_col.count()}")
-    print(f"  Runs: {runs_col.count()}")
-    print(f"  Papers: {papers_col.count()}")
+    print(f"\nDone! Studies: {studies_col.count()}, Runs: {runs_col.count()}, Papers: {papers_col.count()}")
 
 
 if __name__ == "__main__":
