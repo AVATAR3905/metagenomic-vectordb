@@ -9,20 +9,12 @@ def main():
     print("  Metagenomic Vector DB Dashboard")
     print("=" * 50)
 
-    db_path = os.path.join(DIR, "chroma_db")
-    if not os.path.isdir(db_path) or not os.listdir(db_path):
-        print("\nBuilding vector database (first run)...")
-        sys.path.insert(0, DIR)
-        from ingest import ingest
-        ingest()
-        print()
-
     os.chdir(DIR)
     from app import app
 
     port = int(os.environ.get("PORT", 5000))
     host = "0.0.0.0"
-    print(f"\nServer running on http://{host}:{port}")
+    print(f"\n  Open http://localhost:{port} in your browser")
     print("-" * 50)
 
     from gunicorn.app.base import BaseApplication
@@ -39,11 +31,7 @@ def main():
         def load(self):
             return self.application
 
-    options = {
-        "bind": f"{host}:{port}",
-        "workers": 1,
-        "timeout": 120,
-    }
+    options = {"bind": f"{host}:{port}", "workers": 1, "preload": True, "timeout": 120}
     StandaloneApplication(app, options).run()
 
 
