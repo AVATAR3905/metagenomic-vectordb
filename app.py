@@ -93,10 +93,3 @@ def api_filtered_runs():
     results = runs_col.get(**kwargs)
     items = [{"id": results["ids"][i], "metadata": results["metadatas"][i]} for i in range(len(results["ids"]))]
     return jsonify({"runs": items, "total": len(items)})
-
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    host = "0.0.0.0"
-    print(f"Server running on http://{host}:{port}")
-    app.run(debug=False, host=host, port=port)
